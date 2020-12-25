@@ -1,0 +1,37 @@
+.item{
+	display: table;
+}
+.item input{
+	float: left;
+	width: 170px;
+}
+.item button{
+	width: 24px;
+	height: 24px;
+	float: left;
+}
+.up::before{
+	content: "\2191";
+}
+.down::before{
+	content: "\2193";
+}
+.delete{
+	position: relative;
+}
+.delete::before{
+	content: "\2716";
+	position: absolute;
+	top: 0;
+	left: 4px;
+}
+
+.buttons{
+	clear: both;
+}
+.buttons button{
+	display: block;
+}
+.clear{
+	clear: both;
+}

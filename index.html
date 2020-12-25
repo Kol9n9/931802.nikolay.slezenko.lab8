@@ -6,11 +6,59 @@
 	<link type="text/css" rel="stylesheet" href="css/reset.css"/>
 	<link type="text/css" rel="stylesheet" href="css/main.css"/>
 	<script>
-		
+		let currentID = 0;
+		function swapElements(node1, node2) {
+			if(node1 == null || node2 == null) return;
+			let node3 = node2;
+			node2.parentNode.removeChild(node2);
+			node1.after(node3);		
+		}
+		function addNewElement(){
+			let elem = document.createElement("div");
+			elem.classList.add("item");
+			elem.setAttribute("elemID",currentID);
+			elem.innerHTML = '<input type="text"/>';
+			elem.innerHTML += '<input type="text"/>';
+			elem.innerHTML += '<button class="up" onclick="moveUp(this.parentNode)"></button>';
+			elem.innerHTML += '<button class="down" onclick="moveDown(this.parentNode)"></button>';
+			elem.innerHTML += '<button class="delete" onclick="deleteElement(this.parentNode)"></button>';
+			document.getElementsByClassName("list")[0].append(elem);
+			currentID++;
+		}
+		function save(){
+			let arr = document.querySelectorAll("[elemID]");
+			let string = "{";
+			for(let i = 0; i < arr.length; i++)
+			{
+				string += '"'+arr[i].childNodes[0].value+'":"'+arr[i].childNodes[1].value+'"';
+				if(i!=(arr.length-1)) string+= ",";
+			}
+			string += "}";
+			console.log(string);
+			document.getElementById("saved").innerHTML = string;
+		}
+		function moveUp(elem){
+			swapElements(elem, elem.previousElementSibling);
+		}
+		function moveDown(elem){
+			swapElements(elem.nextElementSibling, elem);
+		}
+		function deleteElement(elem){
+			let itemID = elem.getAttribute("elemID");
+			let item = document.querySelector("[elemID='"+itemID+"']");
+			item.parentNode.removeChild(item);
+		}
 	</script>
 </head>	
 
 <body>
-	
+	<div class="list">
+
+	</div>
+	<div class="buttons">
+		<button onclick="addNewElement()">Добавить элемент</button>
+		<button onclick="save()">Сохранить</button>
+	</div>
+	<p id="saved"></p>
 </body>
 </html>
